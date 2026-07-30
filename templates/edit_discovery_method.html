@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h1>Edit Discovery Method</h1>
+    <form method="POST">
+        <div class="form-group">
+            <label>Method Name</label>
+            <input type="text" name="method_name" class="form-control" value="{{ method[1] }}" required>
+        </div>
+        <div class="form-group">
+            <label>Year Developed</label>
+            <input type="number" name="year_developed" class="form-control" value="{{ method[2] }}" required>
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <textarea name="description" class="form-control">{{ method[3] }}</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a href="{{ url_for('view_discovery_methods') }}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

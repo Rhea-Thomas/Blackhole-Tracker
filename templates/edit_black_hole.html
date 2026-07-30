@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h1>Edit Black Hole</h1>
+    <form method="POST">
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" name="name" class="form-control" value="{{ black_hole[1] }}" required>
+        </div>
+        <div class="form-group">
+            <label>Mass (Solar Masses)</label>
+            <input type="number" step="0.01" name="mass_solar_masses" class="form-control" value="{{ black_hole[2] }}" required>
+        </div>
+        <div class="form-group">
+            <label>Distance (Light Years)</label>
+            <input type="number" step="0.01" name="distance_light_years" class="form-control" value="{{ black_hole[3] }}" required>
+        </div>
+        <div class="form-group">
+            <label>Classification</label>
+            <select name="classification" class="form-control" required>
+                <option value="{{ black_hole[4] }}" selected>{{ black_hole[4] }}</option>
+                <option>Stellar</option>
+                <option>Supermassive</option>
+                <option>Intermediate</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Discovery Year</label>
+            <input type="number" name="discovery_year" class="form-control" value="{{ black_hole[5] }}" required>
+        </div>
+        <div class="form-group">
+            <label>Discovery Method</label>
+            <select name="discovery_method_id" class="form-control">
+                {% for method in methods %}
+                <option value="{{ method[0] }}">{{ method[1] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>RA</label>
+            <input type="number" step="0.01" name="ra" class="form-control" value="{{ black_hole[7] }}">
+        </div>
+        <div class="form-group">
+            <label>Dec</label>
+            <input type="number" step="0.01" name="dec" class="form-control" value="{{ black_hole[8] }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a href="{{ url_for('view_black_holes') }}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

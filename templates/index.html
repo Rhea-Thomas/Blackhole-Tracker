@@ -1,0 +1,385 @@
+{% extends "base.html" %}
+{% block title %}Home - Black Hole Tracker{% endblock %}
+{% block content %}
+
+<!-- Full Page Container - Breaks out of container -->
+<div class="page-wrapper">
+    <!-- GIF Background for Features Section -->
+    <div class="page-background">
+        <img src="/static/home.gif" alt="Space Background" class="bg-gif">
+        <div class="bg-overlay"></div>
+    </div>
+
+    <!-- Hero Section - Split Layout -->
+    <div class="hero-section">
+        <!-- Left Side: Text -->
+        <div class="hero-left">
+            <div class="hero-content">
+                <h1 class="hero-title">🔭 Black Hole Observation Tracker</h1>
+                <p class="hero-subtitle">Explore the universe's greatest mysteries through advanced astronomical data analysis and observation tracking.</p>
+            </div>
+        </div>
+        <!-- Right Side: GIF -->
+        <div class="hero-right">
+            <img src="/static/home.gif" alt="Space Background" class="hero-gif">
+        </div>
+    </div>
+
+    <!-- Feature Grid Section -->
+    <div class="features-section">
+        <div class="features-container">
+            <h2 class="section-title">What You Can Do</h2>
+            
+            <div class="features-grid">
+                <!-- Card 1: Add Observations -->
+                <a href="/add_observation" class="feature-card">
+                    <div class="feature-card-inner">
+                        <h3>Add Observation</h3>
+                        <p>Record new telescope observations with detailed measurements and data from observatories worldwide.</p>
+                    </div>
+                </a>
+
+                <!-- Card 2: Manage Black Holes -->
+                <a href="/black_holes" class="feature-card">
+                    <div class="feature-card-inner">
+                        <h3>Manage Black Holes</h3>
+                        <p>View, add, edit, and delete black holes in the catalog. Update properties like mass, distance, and classification.</p>
+                    </div>
+                </a>
+
+                <!-- Card 3: GW Events -->
+                <a href="/gw_events" class="feature-card">
+                    <div class="feature-card-inner">
+                        <h3>GW Events</h3>
+                        <p>Track gravitational wave detections from black hole mergers. Record LIGO/Virgo observations and merger data.</p>
+                    </div>
+                </a>
+
+                <!-- Card 4: Custom Dashboard -->
+                <a href="/custom_dashboard" class="feature-card">
+                    <div class="feature-card-inner">
+                        <h3>Custom Dashboard</h3>
+                        <p>Build personalized dashboards with flexible filters and custom queries.</p>
+                    </div>
+                </a>
+
+                <!-- Card 5: Saved Dashboards -->
+                <a href="/saved_dashboards" class="feature-card">
+                    <div class="feature-card-inner">
+                        <h3>Saved Dashboards</h3>
+                        <p>Access and manage your previously saved dashboards for quick analysis and insights.</p>
+                    </div>
+                </a>
+
+                <!-- Card 6: View Data -->
+                <a href="/view_data" class="feature-card">
+                    <div class="feature-card-inner">
+                        <h3>View Data</h3>
+                        <p>Browse all data including observations, observatories, discovery methods, and more.</p>
+                    </div>
+                </a>
+
+                <!-- Card 7: Discovery Methods -->
+                <a href="/discovery_methods" class="feature-card">
+                    <div class="feature-card-inner">
+                        <h3>Discovery Methods</h3>
+                        <p>Manage historical techniques used to discover black holes from radio telescopes to gravitational waves.</p>
+                    </div>
+                </a>
+
+                <!-- Card 8: Analytics & Reports -->
+                <a href="/reports" class="feature-card">
+                    <div class="feature-card-inner">
+                        <h3>Analytics & Reports</h3>
+                        <p>Generate comprehensive reports with statistical analysis and data visualizations.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Break out of Bootstrap container */
+    .page-wrapper {
+        position: relative;
+        min-height: 100vh;
+        width: 100vw;
+        margin-left: calc(-50vw + 50%);
+        margin-top: -48px;
+        overflow-x: hidden;
+    }
+
+    /* GIF Background - Fixed full screen */
+    .page-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -2;
+    }
+
+    .bg-gif {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .bg-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.5) 0%,
+            rgba(26, 26, 46, 0.75) 50%,
+            rgba(26, 26, 46, 0.9) 100%
+        );
+    }
+
+    /* Hero Section - Split Layout */
+    .hero-section {
+        display: flex;
+        min-height: 550px;
+        position: relative;
+        z-index: 1;
+        width: 100%;
+    }
+
+    .hero-left {
+        flex: 1;
+        background: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 60px;
+    }
+
+    .hero-right {
+        flex: 1;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-gif {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .hero-content {
+        max-width: 500px;
+        color: white;
+        animation: slideInLeft 1s ease;
+    }
+
+    @keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    .hero-title {
+        font-size: 3em;
+        font-weight: bold;
+        margin-bottom: 25px;
+        letter-spacing: 2px;
+        text-align: left;
+        line-height: 1.2;
+    }
+
+    .hero-subtitle {
+        font-size: 1.2em;
+        color: #b0b0b0;
+        line-height: 1.8;
+        text-align: left;
+    }
+
+    /* Features Section - Transparent */
+    .features-section {
+        position: relative;
+        padding: 80px 0;
+        background: transparent;
+    }
+
+    .features-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 40px;
+    }
+
+    .section-title {
+        text-align: center;
+        font-size: 2.5em;
+        color: #e94560;
+        margin-bottom: 60px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-bottom: 40px;
+    }
+
+    .feature-card {
+        background: rgba(0, 0, 0, 0.5);
+        border: 2px solid #e94560;
+        border-radius: 15px;
+        padding: 40px 30px;
+        text-decoration: none;
+        color: white;
+        transition: all 0.4s ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        min-height: 300px;
+        backdrop-filter: blur(5px);
+    }
+
+    .feature-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(233, 69, 96, 0.2), transparent);
+        transition: left 0.5s ease;
+        z-index: 1;
+    }
+
+    .feature-card:hover::before {
+        left: 100%;
+    }
+
+    .feature-card-inner {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        width: 100%;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        background: rgba(233, 69, 96, 0.2);
+        box-shadow: 0 20px 40px rgba(233, 69, 96, 0.3);
+        border-color: #ff6b7a;
+    }
+
+    .feature-card h3 {
+        font-size: 2em;
+        margin-bottom: 25px;
+        font-weight: 800;
+        color: #e94560;
+        padding: 15px;
+        position: relative;
+        text-align: center;
+        letter-spacing: 1px;
+        text-shadow: 
+            2px 2px 4px rgba(0, 0, 0, 0.8),
+            0 0 20px rgba(233, 69, 96, 0.4);
+    }
+
+    /* Subtle starry sparkle effect behind text */
+    .feature-card h3::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: 
+            radial-gradient(1px 1px at 20% 30%, rgba(255, 255, 255, 0.6), transparent),
+            radial-gradient(1px 1px at 60% 70%, rgba(255, 255, 255, 0.4), transparent),
+            radial-gradient(1px 1px at 50% 20%, rgba(255, 255, 255, 0.5), transparent),
+            radial-gradient(1px 1px at 80% 50%, rgba(255, 255, 255, 0.4), transparent),
+            radial-gradient(1px 1px at 30% 80%, rgba(255, 255, 255, 0.6), transparent);
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        opacity: 0.3;
+        animation: twinkle 3s ease-in-out infinite;
+        pointer-events: none;
+        z-index: -1;
+    }
+
+    @keyframes twinkle {
+        0%, 100% { opacity: 0.2; }
+        50% { opacity: 0.5; }
+    }
+
+    .feature-card:hover h3 {
+        color: #ff6b7a;
+        text-shadow: 
+            2px 2px 6px rgba(0, 0, 0, 0.9),
+            0 0 30px rgba(233, 69, 96, 0.6);
+        transform: scale(1.03);
+        transition: all 0.3s ease;
+    }
+
+    .feature-card:hover h3::after {
+        opacity: 0.6;
+    }
+
+    .feature-card p {
+        font-size: 1em;
+        color: #d0d0d0;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .hero-section {
+            flex-direction: column;
+        }
+        .hero-left {
+            padding: 40px 20px;
+            order: 2;
+        }
+        .hero-right {
+            min-height: 250px;
+            order: 1;
+        }
+        .hero-title { font-size: 2em; }
+        .hero-subtitle { font-size: 1em; }
+        .section-title { font-size: 2em; }
+        .features-container { padding: 0 20px; }
+        .features-grid { grid-template-columns: 1fr; gap: 20px; }
+        .feature-card { min-height: 250px; padding: 30px 20px; }
+        .feature-card h3 { 
+            font-size: 1.8em;
+            padding: 15px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .hero-left { padding: 30px 15px; }
+        .hero-title { font-size: 1.6em; }
+        .hero-subtitle { font-size: 0.95em; }
+        .section-title { font-size: 1.6em; margin-bottom: 30px; }
+        .features-container { padding: 0 15px; }
+        .feature-card { padding: 20px 15px; min-height: 200px; }
+        .feature-card h3 { 
+            font-size: 1.5em;
+            padding: 10px;
+            letter-spacing: 1px;
+        }
+        .feature-card p { font-size: 0.9em; }
+    }
+</style>
+
+{% endblock %}

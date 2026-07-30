@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h1>Edit Gravitational Wave Event</h1>
+    <form method="POST">
+        <div class="form-group">
+            <label>Event Name</label>
+            <input type="text" name="event_name" class="form-control" value="{{ event[1] }}" required>
+        </div>
+        <div class="form-group">
+            <label>Event Date</label>
+            <input type="date" name="event_date" class="form-control" value="{{ event[4] }}" required>
+        </div>
+        <div class="form-group">
+            <label>Mass 1</label>
+            <input type="number" step="0.01" name="mass_1" class="form-control" value="{{ event[5] }}" required>
+        </div>
+        <div class="form-group">
+            <label>Mass 2</label>
+            <input type="number" step="0.01" name="mass_2" class="form-control" value="{{ event[6] }}" required>
+        </div>
+        <div class="form-group">
+            <label>Final Mass</label>
+            <input type="number" step="0.01" name="final_mass" class="form-control" value="{{ event[7] }}" required>
+        </div>
+        <div class="form-group">
+            <label>Energy Released</label>
+            <input type="number" step="0.01" name="energy_released" class="form-control" value="{{ event[8] }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a href="{{ url_for('view_gw_events') }}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Saved Dashboards - Black Hole Tracker{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="mb-4" style="color: white;">💾 My Saved Dashboards</h1>
+
+        {% if dashboards %}
+            <div class="row">
+                {% for dashboard in dashboards %}
+                <div class="col-md-6 mb-4">
+                    <div class="card" style="background: rgba(26, 26, 46, 0.95); border: 2px solid #e94560; cursor: pointer; transition: all 0.3s ease;" 
+                         onclick="window.location.href='/load_dashboard/{{ dashboard[0] }}'"
+                         onmouseover="this.style.boxShadow='0 10px 30px rgba(233, 69, 96, 0.5)'; this.style.transform='translateY(-5px)';"
+                         onmouseout="this.style.boxShadow='none'; this.style.transform='translateY(0)';">
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: #e94560;">{{ dashboard[1] }}</h5>
+                            <p class="card-text" style="color: #e0e0e0;">
+                                <strong>Type:</strong> {{ dashboard[2].replace('_', ' ').title() }}<br>
+                                <strong>Created:</strong> {{ dashboard[4].strftime('%Y-%m-%d %H:%M') if dashboard[4] else 'N/A' }}
+                            </p>
+                            {% if dashboard[3] %}
+                            <p class="card-text" style="color: #b0b0b0; font-size: 0.9em;">
+                                {{ dashboard[3] }}
+                            </p>
+                            {% endif %}
+                            <form method="POST" action="/delete_dashboard/{{ dashboard[0] }}" style="display: inline;" onclick="event.stopPropagation();">
+                                <button type="submit" class="btn btn-danger btn-sm" 
+                                        onclick="return confirm('Delete this dashboard?')"
+                                        style="background: linear-gradient(145deg, #dc3545, #c82333); border: none;">
+                                    🗑️ Delete
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info" style="background: rgba(17, 103, 205, 0.2); border: 1px solid #1167cd; color: #8ec5fc;">
+                <h4>No saved dashboards yet</h4>
+                <p>Create a custom dashboard and save it to access it later!</p>
+                <a href="/custom_dashboard" class="btn btn-primary" style="background: linear-gradient(145deg, #e94560, #d63447); border: none;">
+                    Create Dashboard
+                </a>
+            </div>
+        {% endif %}
+
+        <div style="margin-top: 30px;">
+            <a href="/custom_dashboard" class="btn btn-primary" 
+               style="background: linear-gradient(145deg, #e94560, #d63447); border: none; font-weight: bold; padding: 10px 30px;">
+                ➕ Create New Dashboard
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,57 @@
+<!-- ADD OBSERVATION: Save as templates/add_observation.html -->
+{% extends "base.html" %}
+{% block title %}Add Observation - Black Hole Tracker{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <h2 class="mb-4">Add New Observation</h2>
+        <form method="POST" class="card p-4">
+            <div class="mb-3">
+                <label for="bh_id" class="form-label">Black Hole</label>
+                <select class="form-control" id="bh_id" name="bh_id" required>
+                    <option value="">Select a Black Hole</option>
+                    {% for bh_id, name in black_holes %}
+                    <option value="{{ bh_id }}">{{ name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="observatory_id" class="form-label">Observatory</label>
+                <select class="form-control" id="observatory_id" name="observatory_id" required>
+                    <option value="">Select an Observatory</option>
+                    {% for obs_id, name in observatories %}
+                    <option value="{{ obs_id }}">{{ name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="obs_date" class="form-label">Observation Date</label>
+                <input type="date" class="form-control" id="obs_date" name="obs_date" required>
+            </div>
+            <div class="mb-3">
+    <label for="type_id" class="form-label">Observation Type</label>
+    <select class="form-control" id="type_id" name="type_id" required>
+        <option value="">Select an Observation Type</option>
+        {% for type_id, type_name in obs_types %}
+        <option value="{{ type_id }}">{{ type_name }}</option>
+        {% endfor %}
+    </select>
+</div>
+<div class="mb-3">
+    <label for="wavelength_id" class="form-label">Wavelength Range</label>
+    <select class="form-control" id="wavelength_id" name="wavelength_id">
+        <option value="">Select a Wavelength Range</option>
+        {% for wl_id, wl_name in wavelengths %}
+        <option value="{{ wl_id }}">{{ wl_name }}</option>
+        {% endfor %}
+    </select>
+</div>
+            <div class="mb-3">
+                <label for="intensity" class="form-label">Intensity</label>
+                <input type="number" class="form-control" id="intensity" name="intensity" step="0.1" placeholder="0.0">
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Submit Observation</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+<!-- UPDATE: Save as templates/update.html -->
+{% extends "base.html" %}
+{% block title %}Update Black Hole - Black Hole Tracker{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <h2 class="mb-4">Update Black Hole: {{ black_hole[1] }}</h2>
+        <form method="POST" class="card p-4">
+            <div class="mb-3">
+                <label for="mass_solar_masses" class="form-label">Mass (Solar Masses)</label>
+                <input type="number" class="form-control" id="mass_solar_masses" name="mass_solar_masses" 
+                       value="{{ black_hole[2] }}" step="0.1" required>
+            </div>
+            <div class="mb-3">
+                <label for="distance_light_years" class="form-label">Distance (Light-years)</label>
+                <input type="number" class="form-control" id="distance_light_years" name="distance_light_years" 
+                       value="{{ black_hole[3] }}" step="0.1" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Update</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

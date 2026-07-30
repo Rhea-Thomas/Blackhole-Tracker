@@ -1,0 +1,398 @@
+{% extends "base.html" %}
+{% block title %}Reports - Black Hole Tracker{% endblock %}
+{% block content %}
+
+<div class="reports-page">
+    <!-- GIF Background -->
+    <div class="page-background">
+        <img src="/static/home.gif" alt="Space Background" class="bg-gif">
+        <div class="bg-overlay"></div>
+    </div>
+
+    <div class="reports-container">
+        <h2 class="page-title">📊 Analysis Reports</h2>
+        
+        <div class="reports-grid">
+            <!-- Observations per Black Hole -->
+            <div class="report-card">
+                <h3 class="card-title">Observations per Black Hole</h3>
+                <div class="table-responsive">
+                    <table class="report-table">
+                        <thead>
+                            <tr>
+                                <th>Black Hole</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in report1 %}
+                            <tr>
+                                <td>{{ item[0] }}</td>
+                                <td><span class="count-badge">{{ item[1] }}</span></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Observatory Activity -->
+            <div class="report-card">
+                <h3 class="card-title">Observatory Activity</h3>
+                <div class="table-responsive">
+                    <table class="report-table">
+                        <thead>
+                            <tr>
+                                <th>Observatory</th>
+                                <th>Observations</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in report2 %}
+                            <tr>
+                                <td>{{ item[0] }}</td>
+                                <td><span class="count-badge">{{ item[1] }}</span></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Mass by Classification -->
+            <div class="report-card">
+                <h3 class="card-title">Mass by Classification</h3>
+                <div class="table-responsive">
+                    <table class="report-table">
+                        <thead>
+                            <tr>
+                                <th>Classification</th>
+                                <th>Count</th>
+                                <th>Avg Mass</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in report3 %}
+                            <tr>
+                                <td><span class="badge badge-{{ item[0]|lower }}">{{ item[0] }}</span></td>
+                                <td>{{ item[1] }}</td>
+                                <td>{{ "{:,.0f}".format(item[2]|float) if item[2] else 'N/A' }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Gravitational Wave Events -->
+            <div class="report-card">
+                <h3 class="card-title">Gravitational Wave Events</h3>
+                <div class="table-responsive">
+                    <table class="report-table">
+                        <thead>
+                            <tr>
+                                <th>Event</th>
+                                <th>Date</th>
+                                <th>Energy Released</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in report4 %}
+                            <tr>
+                                <td><strong>{{ item[0] }}</strong></td>
+                                <td>{{ item[1] }}</td>
+                                <td>{{ item[2] or 'N/A' }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Recent Observations -->
+            <div class="report-card full-width">
+                <h3 class="card-title">Recent Observations</h3>
+                <div class="table-responsive">
+                    <table class="report-table">
+                        <thead>
+                            <tr>
+                                <th>Black Hole</th>
+                                <th>Observatory</th>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Intensity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in report5 %}
+                            <tr>
+                                <td><strong>{{ item[0] }}</strong></td>
+                                <td>{{ item[1] }}</td>
+                                <td>{{ item[2] }}</td>
+                                <td>{{ item[3] or 'N/A' }}</td>
+                                <td>
+                                    <div class="significance-bar">
+                                        <div class="significance-fill" style="width: {{ ((item[4]|float) * 10) if item[4] else 0 }}%"></div>
+                                        <span>{{ item[4] or 'N/A' }}</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Distance Statistics -->
+            <div class="report-card">
+                <h3 class="card-title">Distance Statistics</h3>
+                <div class="stats-grid">
+                    {% if report6 and report6|length > 0 %}
+                    <div class="stat-item">
+                        <span class="stat-label">Nearest</span>
+                        <span class="stat-value">{{ "{:,.0f}".format(report6[0][0]|float) if report6[0][0] else 'N/A' }} ly</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Farthest</span>
+                        <span class="stat-value">{{ "{:,.0f}".format(report6[0][1]|float) if report6[0][1] else 'N/A' }} ly</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Average</span>
+                        <span class="stat-value">{{ "{:,.0f}".format(report6[0][2]|float) if report6[0][2] else 'N/A' }} ly</span>
+                    </div>
+                    {% else %}
+                    <p class="no-data">No distance data available</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Full page layout */
+    .reports-page {
+        position: relative;
+        min-height: 100vh;
+        width: 100vw;
+        margin-left: calc(-50vw + 50%);
+        margin-top: -48px;
+        padding: 80px 40px 60px;
+    }
+
+    /* GIF Background */
+    .page-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+    }
+
+    .bg-gif {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .bg-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    /* Container */
+    .reports-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+    }
+
+    .page-title {
+        color: #e94560;
+        font-size: 2.5em;
+        font-weight: bold;
+        margin-bottom: 30px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Reports Grid */
+    .reports-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+
+    /* Report Card */
+    .report-card {
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 25px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .report-card.full-width {
+        grid-column: span 2;
+    }
+
+    .card-title {
+        color: #ffffff;
+        font-size: 1.3em;
+        font-weight: 600;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #e94560;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Tables */
+    .report-table {
+        width: 100%;
+        border-collapse: collapse;
+        color: white;
+    }
+
+    .report-table thead {
+        background: rgba(233, 69, 96, 0.2);
+    }
+
+    .report-table th {
+        padding: 12px 15px;
+        text-align: left;
+        font-weight: 600;
+        color: #e94560;
+        border-bottom: 2px solid rgba(233, 69, 96, 0.3);
+        font-size: 0.95em;
+    }
+
+    .report-table td {
+        padding: 12px 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        color: #e0e0e0;
+    }
+
+    .report-table tbody tr:hover {
+        background: rgba(233, 69, 96, 0.1);
+    }
+
+    .count-badge {
+        background: #e94560;
+        color: white;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9em;
+    }
+
+    /* Classification Badges */
+    .badge {
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.85em;
+        font-weight: 600;
+    }
+
+    .badge-stellar {
+        background: #3498db;
+        color: white;
+    }
+
+    .badge-supermassive {
+        background: #e94560;
+        color: white;
+    }
+
+    .badge-intermediate {
+        background: #9b59b6;
+        color: white;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+    }
+
+    .stat-item {
+        background: rgba(233, 69, 96, 0.1);
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        border: 1px solid rgba(233, 69, 96, 0.3);
+    }
+
+    .stat-label {
+        display: block;
+        color: #b0b0b0;
+        font-size: 0.9em;
+        margin-bottom: 8px;
+    }
+
+    .stat-value {
+        display: block;
+        color: #e94560;
+        font-size: 1.3em;
+        font-weight: bold;
+    }
+
+    /* Significance Bar */
+    .significance-bar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .significance-fill {
+        height: 8px;
+        background: linear-gradient(90deg, #e94560, #ff6b7a);
+        border-radius: 4px;
+        min-width: 20px;
+        max-width: 100px;
+    }
+
+    .no-data {
+        color: #888;
+        text-align: center;
+        padding: 20px;
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+        .reports-grid {
+            grid-template-columns: 1fr;
+        }
+        .report-card.full-width {
+            grid-column: span 1;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .reports-page {
+            padding: 80px 20px 40px;
+        }
+        .page-title {
+            font-size: 1.8em;
+        }
+        .card-title {
+            font-size: 1.1em;
+        }
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+        .report-table {
+            font-size: 0.85em;
+        }
+        .report-table th, .report-table td {
+            padding: 10px;
+        }
+    }
+</style>
+
+{% endblock %}

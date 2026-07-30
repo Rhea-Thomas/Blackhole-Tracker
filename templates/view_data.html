@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% block title %}View Data - Black Hole Tracker{% endblock %}
+{% block content %}
+
+<div class="container mt-4">
+    <h2 class="text-white mb-4 text-center">📊 Browse Database</h2>
+    <p class="text-white-50 text-center mb-5">Select which data you'd like to view and manage</p>
+    
+    <div class="row g-4">
+        <!-- Observations -->
+        <div class="col-md-4">
+            <a href="/observations" class="text-decoration-none">
+                <div class="card h-100 data-card" style="background: rgba(0,0,0,0.8); border: 2px solid #e94560;">
+                    <div class="card-body text-center">
+                        <div style="font-size: 3em; margin-bottom: 15px;">📡</div>
+                        <h4 class="text-white">Observations</h4>
+                        <p class="text-white-50">View all telescope observations</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        
+        <!-- Black Holes -->
+        <div class="col-md-4">
+            <a href="/black_holes" class="text-decoration-none">
+                <div class="card h-100 data-card" style="background: rgba(0,0,0,0.8); border: 2px solid #e94560;">
+                    <div class="card-body text-center">
+                        <div style="font-size: 3em; margin-bottom: 15px;">🌌</div>
+                        <h4 class="text-white">Black Holes</h4>
+                        <p class="text-white-50">View all black holes catalog</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        
+        <!-- Observatories -->
+        <div class="col-md-4">
+            <a href="/observatories" class="text-decoration-none">
+                <div class="card h-100 data-card" style="background: rgba(0,0,0,0.8); border: 2px solid #e94560;">
+                    <div class="card-body text-center">
+                        <div style="font-size: 3em; margin-bottom: 15px;">🔭</div>
+                        <h4 class="text-white">Observatories</h4>
+                        <p class="text-white-50">View all telescope facilities</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        
+        <!-- GW Events -->
+        <div class="col-md-4">
+            <a href="/gw_events" class="text-decoration-none">
+                <div class="card h-100 data-card" style="background: rgba(0,0,0,0.8); border: 2px solid #e94560;">
+                    <div class="card-body text-center">
+                        <div style="font-size: 3em; margin-bottom: 15px;">🌊</div>
+                        <h4 class="text-white">GW Events</h4>
+                        <p class="text-white-50">View gravitational wave events</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        
+        <!-- Observation Types -->
+        <div class="col-md-4">
+            <a href="/observation_types" class="text-decoration-none">
+                <div class="card h-100 data-card" style="background: rgba(0,0,0,0.8); border: 2px solid #e94560;">
+                    <div class="card-body text-center">
+                        <div style="font-size: 3em; margin-bottom: 15px;">📋</div>
+                        <h4 class="text-white">Observation Types</h4>
+                        <p class="text-white-50">View observation categories</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        
+        <!-- Wavelength Ranges -->
+        <div class="col-md-4">
+            <a href="/wavelength_ranges" class="text-decoration-none">
+                <div class="card h-100 data-card" style="background: rgba(0,0,0,0.8); border: 2px solid #e94560;">
+                    <div class="card-body text-center">
+                        <div style="font-size: 3em; margin-bottom: 15px;">📶</div>
+                        <h4 class="text-white">Wavelength Ranges</h4>
+                        <p class="text-white-50">View electromagnetic spectrum data</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        
+        <!-- Discovery Methods -->
+        <div class="col-md-4">
+            <a href="/discovery_methods" class="text-decoration-none">
+                <div class="card h-100 data-card" style="background: rgba(0,0,0,0.8); border: 2px solid #e94560;">
+                    <div class="card-body text-center">
+                        <div style="font-size: 3em; margin-bottom: 15px;">🔬</div>
+                        <h4 class="text-white">Discovery Methods</h4>
+                        <p class="text-white-50">View detection techniques</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .data-card {
+        transition: all 0.3s ease;
+    }
+    
+    .data-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(233, 69, 96, 0.4);
+        border-color: #ff6b7a !important;
+        background: rgba(233, 69, 96, 0.15) !important;
+    }
+</style>
+
+{% endblock %}

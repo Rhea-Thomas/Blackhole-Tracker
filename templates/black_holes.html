@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Black Holes - Black Hole Tracker{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="mb-4 text-white">🌌 Black Holes Catalog</h2>
+        <a href="{{ url_for('add_black_hole') }}" class="btn btn-primary mb-3">➕ Add New Black Hole</a>
+        
+        <div class="card" style="background: rgba(0,0,0,0.85);">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-dark table-hover">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Mass (Solar Masses)</th>
+                                <th>Distance (Light-years)</th>
+                                <th>Classification</th>
+                                <th>Discovery Year</th>
+                                <th>Discovery Method</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for bh in black_holes %}
+                            <tr>
+                                <td><strong>{{ bh[1] }}</strong></td>
+                                <td>{{ "{:,.0f}".format(bh[2]) }}</td>
+                                <td>{{ "{:,.0f}".format(bh[3]) }}</td>
+                                <td>
+                                    {% if bh[4] == 'Stellar' %}
+                                    <span class="badge bg-info">{{ bh[4] }}</span>
+                                    {% elif bh[4] == 'Supermassive' %}
+                                    <span class="badge bg-warning text-dark">{{ bh[4] }}</span>
+                                    {% else %}
+                                    <span class="badge bg-secondary">{{ bh[4] }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ bh[5] }}</td>
+                                <td>{{ bh[6] if bh[6] else 'Unknown' }}</td>
+                                <td>
+                                    <a href="{{ url_for('edit_black_hole', bh_id=bh[0]) }}" class="btn btn-sm btn-warning">
+                                        ✏️ Edit
+                                    </a>
+                                    <form method="POST" action="{{ url_for('delete_black_hole', bh_id=bh[0]) }}" style="display:inline;">
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete this black hole? This will also delete all associated observations.')">
+                                            🗑️ Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

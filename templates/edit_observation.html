@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Edit Observation</h2>
+    
+    {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+    
+    <form method="POST" class="card p-4" style="background: rgba(0,0,0,0.7);">
+        <div class="mb-3">
+            <label for="bh_id" class="form-label text-white">Black Hole *</label>
+            <select class="form-select" id="bh_id" name="bh_id" required>
+                <option value="">Select Black Hole</option>
+                {% for bh in black_holes %}
+                <option value="{{ bh[0] }}" {% if observation[1] == bh[0] %}selected{% endif %}>{{ bh[1] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="mb-3">
+            <label for="observatory_id" class="form-label text-white">Observatory *</label>
+            <select class="form-select" id="observatory_id" name="observatory_id" required>
+                <option value="">Select Observatory</option>
+                {% for obs in observatories %}
+                <option value="{{ obs[0] }}" {% if observation[2] == obs[0] %}selected{% endif %}>{{ obs[1] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="mb-3">
+            <label for="obs_date" class="form-label text-white">Observation Date *</label>
+            <input type="date" class="form-control" id="obs_date" name="obs_date" 
+                   value="{{ observation[3] }}" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="type_id" class="form-label text-white">Observation Type *</label>
+            <select class="form-select" id="type_id" name="type_id" required>
+                <option value="">Select Type</option>
+                {% for t in obs_types %}
+                <option value="{{ t[0] }}" {% if observation[4] == t[0] %}selected{% endif %}>{{ t[1] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="mb-3">
+            <label for="wavelength_id" class="form-label text-white">Wavelength Range</label>
+            <select class="form-select" id="wavelength_id" name="wavelength_id">
+                <option value="">Select Wavelength</option>
+                {% for w in wavelengths %}
+                <option value="{{ w[0] }}" {% if observation[5] == w[0] %}selected{% endif %}>{{ w[1] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="mb-3">
+            <label for="intensity" class="form-label text-white">Intensity</label>
+            <input type="number" step="0.01" class="form-control" id="intensity" name="intensity" 
+                   value="{{ observation[6] }}" min="0">
+        </div>
+        
+        <div class="mb-3">
+            <label for="notes" class="form-label text-white">Notes</label>
+            <textarea class="form-control" id="notes" name="notes" rows="3">{{ observation[7] or '' }}</textarea>
+        </div>
+        
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">Update Observation</button>
+            <a href="{{ url_for('view_observations') }}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
