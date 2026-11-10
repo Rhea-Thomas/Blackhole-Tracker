@@ -8,6 +8,23 @@ This application centralizes black hole observation data from multiple sources -
 
 Users can record observations, search by multiple criteria, track gravitational wave events, generate analytical reports, and build custom dashboards - all while the system automatically maintains an audit trail of every change.
 
+## Screenshots
+
+![Home page](docs/screenshots/home.jpg)
+
+| Search with filters | Black hole catalog |
+|---|---|
+| ![Search results for supermassive black holes](docs/screenshots/search_results.jpg) | ![Black holes catalog with edit and delete](docs/screenshots/black_holes.jpg) |
+| **Gravitational wave events** | **Custom dashboard builder** |
+| ![Gravitational wave events table](docs/screenshots/gw_events.jpg) | ![Custom dashboard: observations by black hole](docs/screenshots/custom_dashboard.jpg) |
+
+<details>
+<summary><b>Analysis reports page</b> (stored procedures, aggregates, recent activity)</summary>
+
+![Analysis reports](docs/screenshots/reports.jpg)
+
+</details>
+
 ## Features
 
 ### Core Functionality
