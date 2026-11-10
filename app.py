@@ -5,16 +5,23 @@ import random
 from datetime import datetime, timedelta
 import os
 
-app = Flask(__name__)
-app.secret_key = 'REMOVED_SECRET_KEY'
+try:  # optional: read settings from a local .env file
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
-# Database connection configuration
+app = Flask(__name__)
+# Secrets and connection settings come from the environment (see .env.example).
+# Nothing sensitive is stored in the code.
+app.secret_key = os.environ.get('FLASK_SECRET_KEY') or os.urandom(24)
+
 DB_CONFIG = {
-    'host': 'localhost',
-    'database': 'black_hole_tracker',
-    'user': 'postgres',
-    'password': 'REMOVED_PASSWORD',
-    'port': 5432
+    'host': os.environ.get('DB_HOST', 'localhost'),
+    'database': os.environ.get('DB_NAME', 'black_hole_tracker'),
+    'user': os.environ.get('DB_USER', 'postgres'),
+    'password': os.environ.get('DB_PASSWORD', ''),
+    'port': int(os.environ.get('DB_PORT', '5432')),
 }
 
 def get_db_connection():
@@ -1692,4 +1699,5 @@ def generate_dashboard_report(report_type, bh_id, observatory_id, obs_type_id, s
 
 if __name__ == '__main__':
     init_db()
-    app.run(debug=True, host='localhost', port=5000)
+    app.run(debug=os.environ.get('FLASK_DEBUG') == '1', host='localhost',
+            port=int(os.environ.get('PORT', '5000')))

@@ -118,29 +118,23 @@ Install these before proceeding:
 
 ### Installation Steps
 
-#### 1. Extract Project Files
+#### 1. Clone the Repository
 
-Unzip the project to your preferred location. The directory structure should look like:
+```bash
+git clone https://github.com/Rhea-Thomas/Blackhole-Tracker.git
+cd Blackhole-Tracker
+```
+
+The layout:
 
 ```
-black_hole_tracker/
-├── app.py
-├── black_hole_tracker_dump.sql
-├── README.md
-├── templates/
-│   ├── base.html
-│   ├── index.html
-│   ├── observations.html
-│   ├── search.html
-│   ├── reports.html
-│   ├── custom_dashboard.html
-│   ├── saved_dashboards.html
-│   ├── black_holes.html
-│   ├── observatories.html
-│   ├── gw_events.html
-│   └── [additional CRUD templates]
-└── static/
-    └── home.gif
+Blackhole-Tracker/
+├── app.py                       # Flask app, schema, stored procedures, routes
+├── black_hole_tracker_dump.sql  # Full database dump (alternative to auto-init)
+├── .env.example                 # Settings template
+├── requirements.txt
+├── templates/                   # Jinja2 pages (CRUD, search, reports, dashboards)
+└── static/                      # Background images and screenshots
 ```
 
 #### 2. Create PostgreSQL Database
@@ -161,38 +155,45 @@ CREATE DATABASE black_hole_tracker;
 3. Name: `black_hole_tracker`
 4. Click Save
 
-#### 3. Configure Database Connection
+#### 3. Configure the Database Connection
 
-Open `app.py` in any text editor and find the `DB_CONFIG` section (around line 10):
+Credentials are read from environment variables, so no password lives in the code. Copy the template and fill in your PostgreSQL password:
 
-```python
-DB_CONFIG = {
-    'host': 'localhost',
-    'database': 'black_hole_tracker',
-    'user': 'postgres',
-    'password': 'YOUR_PASSWORD_HERE',  # ← Change this!
-    'port': 5432
-}
+```bash
+cp .env.example .env    # .env is git-ignored
+# then edit .env and set DB_PASSWORD (and FLASK_SECRET_KEY)
 ```
 
-Replace `'YOUR_PASSWORD_HERE'` with your actual PostgreSQL password.
+| Variable | Default | Purpose |
+|---|---|---|
+| `DB_HOST` | `localhost` | PostgreSQL host |
+| `DB_PORT` | `5432` | PostgreSQL port |
+| `DB_NAME` | `black_hole_tracker` | Database name |
+| `DB_USER` | `postgres` | Database user |
+| `DB_PASSWORD` | *(empty)* | Your PostgreSQL password |
+| `FLASK_SECRET_KEY` | random per run | Signs session cookies; set it so sessions survive restarts |
+| `FLASK_DEBUG` | off | Set to `1` for auto-reload and debug pages |
+| `PORT` | `5000` | Port the app listens on |
+
+You can also `export DB_PASSWORD=...` in your shell instead of using a `.env` file.
 
 #### 4. Install Python Dependencies
 
 Open terminal/command prompt in the project directory:
 
 ```bash
-pip install flask psycopg2-binary
+pip install -r requirements.txt
 ```
 
 If you get permission errors, try:
 ```bash
-pip install --user flask psycopg2-binary
+pip install --user -r requirements.txt
 ```
 
 **Required packages:**
 - **flask** - Web framework for routing and templating
 - **psycopg2-binary** - PostgreSQL database adapter
+- **python-dotenv** - Loads settings from `.env`
 
 #### 5. Initialize Database
 
@@ -237,7 +238,7 @@ You should see the Black Hole Observation Tracker homepage with six feature card
 - **Solution:** Install psycopg2: `pip install psycopg2-binary`
 
 **Problem:** `psycopg2.OperationalError: FATAL: password authentication failed`
-- **Solution:** Check the password in `app.py` DB_CONFIG matches your PostgreSQL password
+- **Solution:** Check that `DB_PASSWORD` in your `.env` (or shell) matches your PostgreSQL password
 
 **Problem:** `psycopg2.OperationalError: could not connect to server`
 - **Solution:** Ensure PostgreSQL service is running:
@@ -248,7 +249,7 @@ You should see the Black Hole Observation Tracker homepage with six feature card
 **Problem:** Port 5000 already in use
 - **Solution:** Either:
   - Close the application using port 5000, or
-  - Change port in `app.py`: `app.run(debug=True, port=5001)`
+  - Set a different port: `PORT=5001 python app.py`
 
 **Problem:** Database initialization errors
 - **Solution:** 
@@ -674,7 +675,7 @@ For issues or questions:
 1. Check the Troubleshooting section above
 2. Verify all prerequisites are installed
 3. Ensure PostgreSQL service is running
-4. Confirm database password is correct in app.py
+4. Confirm `DB_PASSWORD` is set correctly in `.env`
 
  
 
