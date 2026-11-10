@@ -1241,31 +1241,50 @@ def reports():
         report3 = cur.fetchall()
         
         cur.execute("""
-            SELECT event_name, mass_1, mass_2, final_mass, energy_released, event_date
+            SELECT event_name, event_date, energy_released
             FROM gravitational_wave_events
             ORDER BY event_date DESC;
         """)
         report4 = cur.fetchall()
         
-        cur.execute("SELECT * FROM get_observations_by_type()")
+        cur.execute("""
+            SELECT bh.name, obs.name, o.observation_date, ot.type_name, o.intensity
+            FROM observations o
+            JOIN black_holes bh ON o.bh_id = bh.bh_id
+            JOIN observatories obs ON o.observatory_id = obs.observatory_id
+            LEFT JOIN observation_types ot ON o.type_id = ot.type_id
+            ORDER BY o.observation_date DESC
+            LIMIT 10;
+        """)
         report5 = cur.fetchall()
         
-        cur.execute("SELECT * FROM get_avg_intensity_per_bh()")
+        cur.execute("""
+            SELECT MIN(distance_light_years), MAX(distance_light_years), AVG(distance_light_years)
+            FROM black_holes;
+        """)
         report6 = cur.fetchall()
+        
+        # Stored procedures
+        cur.execute("SELECT * FROM get_observations_by_type()")
+        report7 = cur.fetchall()
+        
+        cur.execute("SELECT * FROM get_avg_intensity_per_bh()")
+        report8 = cur.fetchall()
         
         cur.close()
         conn.close()
         
         return render_template('reports.html', 
                               report1=report1, report2=report2, report3=report3,
-                              report4=report4, report5=report5, report6=report6)
+                              report4=report4, report5=report5, report6=report6,
+                              report7=report7, report8=report8)
     except Exception as e:
         print(f"Error generating reports: {str(e)}")
         flash(f'❌ Error generating reports: {str(e)}', 'danger')
         return render_template('reports.html', 
                               report1=[], report2=[], report3=[],
                               report4=[], report5=[], report6=[],
-                              error=str(e))
+                              report7=[], report8=[], error=str(e))
  
 @app.route('/custom_dashboard', methods=['GET', 'POST'])
 def custom_dashboard():

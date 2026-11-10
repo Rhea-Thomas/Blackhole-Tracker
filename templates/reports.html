@@ -93,7 +93,7 @@
                             <tr>
                                 <th>Event</th>
                                 <th>Date</th>
-                                <th>Energy Released</th>
+                                <th>Energy Released (M☉)</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -132,8 +132,8 @@
                                 <td>{{ item[3] or 'N/A' }}</td>
                                 <td>
                                     <div class="significance-bar">
-                                        <div class="significance-fill" style="width: {{ ((item[4]|float) * 10) if item[4] else 0 }}%"></div>
-                                        <span>{{ item[4] or 'N/A' }}</span>
+                                        <div class="significance-fill" style="width: {{ [item[4]|float, 100]|min if item[4] else 0 }}%"></div>
+                                        <span>{{ "%.1f"|format(item[4]|float) if item[4] is not none else 'N/A' }}</span>
                                     </div>
                                 </td>
                             </tr>
@@ -163,6 +163,57 @@
                     {% else %}
                     <p class="no-data">No distance data available</p>
                     {% endif %}
+                </div>
+            </div>
+
+            <!-- Observations by Type (stored procedure: get_observations_by_type) -->
+            <div class="report-card">
+                <h3 class="card-title">Observations by Type</h3>
+                <div class="table-responsive">
+                    <table class="report-table">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in report7 %}
+                            <tr>
+                                <td>{{ item[0] }}</td>
+                                <td><span class="count-badge">{{ item[1] }}</span></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Average Intensity (stored procedure: get_avg_intensity_per_bh) -->
+            <div class="report-card full-width">
+                <h3 class="card-title">Average Intensity per Black Hole</h3>
+                <div class="table-responsive">
+                    <table class="report-table">
+                        <thead>
+                            <tr>
+                                <th>Black Hole</th>
+                                <th>Average Intensity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in report8 %}
+                            <tr>
+                                <td>{{ item[0] }}</td>
+                                <td>
+                                    <div class="significance-bar">
+                                        <div class="significance-fill" style="width: {{ [item[1]|float, 100]|min if item[1] else 0 }}%"></div>
+                                        <span>{{ "%.1f"|format(item[1]|float) if item[1] is not none else 'N/A' }}</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

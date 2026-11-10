@@ -82,7 +82,7 @@
                         {% for row in dashboard_data.results %}
                         <tr>
                             {% for val in row %}
-                            <td>{{ val if val is not none else 'N/A' }}</td>
+                            <td>{% if val is none %}N/A{% elif val is float %}{{ "{:,.2f}".format(val) }}{% else %}{{ val }}{% endif %}</td>
                             {% endfor %}
                         </tr>
                         {% endfor %}
